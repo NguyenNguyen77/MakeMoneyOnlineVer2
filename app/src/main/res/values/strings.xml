@@ -7,5 +7,13 @@
     <string name="logIn">LogIn</string>
 
     <string name="facebook_app_id">814235785634846</string>
+    <string name="app_id">ca-app-pub-2382949581276628~7970895145</string>
     <string name="fb_login_protocol_scheme">fb814235785634846</string>
+    <!--<string name="add_unit_id_banner">ca-app-pub-2382949581276628/1541218160</string>-->
+    <string name="add_unit_id_banner">ca-app-pub-3940256099942544/6300978111</string>
+    <!--<string name="add_unit_id_interstitial">ca-app-pub-2382949581276628/6406532039</string>-->
+    <string name="add_unit_id_interstitial">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="add_unit_id_rewarded_video">ca-app-pub-2382949581276628/2696896478</string>
+    <string name="impossible_game">Impossible Game</string>
+    <string name="retry_button_text">Retry</string>
 </resources>
