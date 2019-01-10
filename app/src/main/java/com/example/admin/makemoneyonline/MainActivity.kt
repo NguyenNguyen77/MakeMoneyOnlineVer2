@@ -9,10 +9,18 @@ import com.example.admin.makemoneyonline.adapter.TabPagerAdapter
 import com.google.android.gms.ads.*
 import kotlinx.android.synthetic.main.activity_main.*
 
+//import AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.reward.RewardItem
+import com.google.android.gms.ads.reward.RewardedVideoAd
+import com.google.android.gms.ads.reward.RewardedVideoAdListener
+
 
 const val GAME_LENGTH_MILLISECONDS = 3000L
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , RewardedVideoAdListener {
+
+    private lateinit var mRewardedVideoAd: RewardedVideoAd
 
     private lateinit var mInterstitialAd: InterstitialAd
     private var mCountDownTimer: CountDownTimer? = null
@@ -58,12 +66,25 @@ class MainActivity : AppCompatActivity() {
         // Kick off the first play of the "game."
         startGame()
 
+
+        //Video
+        // Use an activity context to get the rewarded video instance.
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
+        mRewardedVideoAd.rewardedVideoAdListener = this
+
+        loadRewardedVideoAd()
+
+        if (mRewardedVideoAd.isLoaded) {
+            mRewardedVideoAd.show()
+        }
+
     }
 
     // Called when leaving the activity
     public override fun onPause() {
         ad_view.pause()
         mCountDownTimer?.cancel()
+        mRewardedVideoAd.pause(this)
         super.onPause()
     }
 
@@ -71,6 +92,7 @@ class MainActivity : AppCompatActivity() {
     public override fun onResume() {
         super.onResume()
         ad_view.resume()
+        mRewardedVideoAd.resume(this)
         if (mGameIsInProgress) {
             resumeGame(mTimerMilliseconds)
         }
@@ -80,6 +102,7 @@ class MainActivity : AppCompatActivity() {
     public override fun onDestroy() {
         ad_view.destroy()
         super.onDestroy()
+        mRewardedVideoAd.destroy(this)
     }
 
 
@@ -138,5 +161,43 @@ class MainActivity : AppCompatActivity() {
         mCountDownTimer?.start()
     }
 
+
+    private fun loadRewardedVideoAd() {
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+                AdRequest.Builder().build())
+    }
+
+    override fun onRewardedVideoAdLeftApplication() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRewardedVideoAdLoaded() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRewardedVideoAdOpened() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRewardedVideoCompleted() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRewarded(p0: RewardItem?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRewardedVideoStarted() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRewardedVideoAdFailedToLoad(p0: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRewardedVideoAdClosed() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        loadRewardedVideoAd()
+    }
 
 }
