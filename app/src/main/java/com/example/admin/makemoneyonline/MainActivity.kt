@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import com.example.admin.makemoneyonline.adapter.TabPagerAdapter
+import com.github.kittinunf.fuel.core.FuelManager
 import com.google.android.gms.ads.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -40,6 +41,8 @@ class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //FuelManager.instance.basePath = "http://142.93.29.45:8888";
 
         val fragmentAdapter = TabPagerAdapter(supportFragmentManager)
         if (viewpager_main != null) {
@@ -95,7 +98,6 @@ class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
 
         // Display current coin count to user.
         coin_count_text.text = "Coins: $mCoinCount"
-
         startGameVideo()
 
     }
@@ -230,6 +232,8 @@ class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
     private fun addCoins(coins: Int) {
         mCoinCount += coins
         coin_count_text.text = "Coins: $mCoinCount"
+        val request = BaseMethod()
+        request.httpGetJson();
     }
 
     private fun startGameVideo() {

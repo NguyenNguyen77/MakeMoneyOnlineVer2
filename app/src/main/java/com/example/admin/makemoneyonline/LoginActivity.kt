@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import com.example.admin.makemoneyonline.presenter.LoginPresenter
 import com.facebook.CallbackManager
 import com.facebook.GraphRequest
 import com.facebook.login.widget.LoginButton
@@ -33,6 +34,9 @@ class LoginActivity : AppCompatActivity() {
     private var mUserId: String = ""
     private var mViewManager: ViewManager = ViewManager.getInstance()
     private val TAG = "LoginActivity"
+
+    private val mLoginPersenter = LoginPresenter(this, this)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,7 +136,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun reqLogintoServer(userid: String, name: String, email: String, birthday: String, token: String) {
-
+        mLoginPersenter.sendRequestLogin("111-222-3333", "123456")
     }
 }
 
