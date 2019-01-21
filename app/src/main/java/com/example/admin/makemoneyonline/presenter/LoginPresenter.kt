@@ -28,14 +28,15 @@ class LoginPresenter(context: Context, loginActivity: LoginActivity) : BaseMetho
     }
 
 
-
-
     override fun onTaskError(s: String, CaseRequest: String) {
-
+        if (CaseRequest == KeyManager().REQ_LOGIN) {
+            mLoginActivity!!.onTaskError(s)
+        }
     }
 
     override fun onTaskCompleted(s: String, CaseRequest: String) {
         val tem = ""
+        mLoginActivity!!.onTaskCompleted(s)
     }
 
 }

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.example.admin.makemoneyonline.presenter.LoginPresenter
 import com.facebook.CallbackManager
 import com.facebook.GraphRequest
@@ -20,7 +21,7 @@ import com.facebook.AccessToken
 import org.json.JSONException
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), ILoginActivity {
 
 
     private var callbackManager: CallbackManager? = null
@@ -43,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         mViewManager.setActivity(this)
-
+        mLoginPersenter.LoginPresenter(this, this)
         printHashKey(this)
         val accessToken = AccessToken.getCurrentAccessToken()
         if (accessToken != null) {
@@ -138,5 +139,15 @@ class LoginActivity : AppCompatActivity() {
     private fun reqLogintoServer(userid: String, name: String, email: String, birthday: String, token: String) {
         mLoginPersenter.sendRequestLogin("111-222-3333", "123456")
     }
+
+    override fun onTaskCompleted(s: String) {
+        Log.i(TAG, "onTaskCompleted: " + s)
+    }
+
+    override fun onTaskError(s: String) {
+        Log.i(TAG, "onTaskError: " + getString(R.string.cannot_login))
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show()
+    }
+
 }
 

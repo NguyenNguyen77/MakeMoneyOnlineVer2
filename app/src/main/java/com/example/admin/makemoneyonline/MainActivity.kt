@@ -3,6 +3,7 @@ package com.example.admin.makemoneyonline
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.admin.makemoneyonline.adapter.TabPagerAdapter
@@ -20,11 +21,12 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener
 
 
 const val GAME_LENGTH_MILLISECONDS = 3000L
-const val COUNTER_TIME = 30L
+const val COUNTER_TIME = 10L
 const val GAME_OVER_REWARD = 1
 const val AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917"
+private val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
+class MainActivity : AppCompatActivity(), RewardedVideoAdListener, IMainActivity {
 
     private lateinit var mRewardedVideoAd: RewardedVideoAd
 
@@ -45,7 +47,7 @@ class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        mMainActivityPresenter.MainActivityPresenter(this, this)
         //FuelManager.instance.basePath = "http://142.93.29.45:8888";
 
         val fragmentAdapter = TabPagerAdapter(supportFragmentManager)
@@ -258,27 +260,22 @@ class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
 
 
     override fun onRewardedVideoAdLeftApplication() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         Toast.makeText(this, "onRewardedVideoAdLeftApplication", Toast.LENGTH_SHORT).show()
     }
 
     override fun onRewardedVideoAdLoaded() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         Toast.makeText(this, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show()
     }
 
     override fun onRewardedVideoAdOpened() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         Toast.makeText(this, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show()
     }
 
     override fun onRewardedVideoAdFailedToLoad(p0: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         Toast.makeText(this, "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show()
     }
 
     override fun onRewardedVideoAdClosed() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         loadRewardedVideoAd()
         Toast.makeText(this, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show()
     }
@@ -297,4 +294,13 @@ class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
         Toast.makeText(this, "onRewardedVideoCompleted", Toast.LENGTH_SHORT).show()
     }
 
+    override fun onTaskCompleted(s: String) {
+        Log.i(TAG, "onTaskCompleted: " + s)
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onTaskError(s: String) {
+        Log.i(TAG, "onTaskError: " + s)
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show()
+    }
 }

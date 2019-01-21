@@ -47,6 +47,8 @@ class MakeMoneyOnlineTask(asynCallBack: AsyncTaskCompleteListener<ResultObject>)
     override fun onPostExecute(resuiltObject: ResultObject?) {
         if (resuiltObject != null) {
             AsynCallBack!!.onTaskCompleted(resuiltObject!!.result, resuiltObject!!.case)
+        } else {
+            AsynCallBack!!.onTaskError("", resuiltObject!!.case)
         }
         super.onPostExecute(resuiltObject)
     }

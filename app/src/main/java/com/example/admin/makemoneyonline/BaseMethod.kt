@@ -19,6 +19,7 @@ open class BaseMethod() {
     fun httpGetJson(url: String): String {
         var gsonResponse = ""
         var isResponse = false
+        var timeout = 0
         try {
             Fuel.get(url).responseJson { request, response, result ->
                 var responseJson: String = result.get().content
@@ -33,7 +34,11 @@ open class BaseMethod() {
         } finally {
         }
         while (!isResponse) {
+            if (timeout > 200) {
+                break
+            }
             Thread.sleep(100)
+            timeout++
             Log.d(TAG, "KhoaNguyen - Wait for http response")
         }
         return gsonResponse
@@ -43,6 +48,7 @@ open class BaseMethod() {
     fun httpGetJson(url: String, parameters: List<Pair<String, Any?>>? = null): String {
         var gsonResponse = ""
         var isResponse = false
+        var timeout = 0
         try {
             Fuel.get(url, parameters).responseJson { request, response, result ->
                 var responseJson: String = result.get().content
@@ -57,7 +63,11 @@ open class BaseMethod() {
         } finally {
         }
         while (!isResponse) {
+            if (timeout > 200) {
+                break
+            }
             Thread.sleep(100)
+            timeout++
             Log.d(TAG, "KhoaNguyen - Wait for http response")
         }
         return gsonResponse
@@ -68,6 +78,7 @@ open class BaseMethod() {
     fun httpPostJson(url: String): String {
         var gsonResponse = ""
         var isResponse = false
+        var timeout = 0
         try {
             Fuel.post(url).responseJson { request, response, result ->
                 var responseJson: String = result.get().content
@@ -81,7 +92,11 @@ open class BaseMethod() {
         } finally {
         }
         while (!isResponse) {
+            if (timeout > 200) {
+                break
+            }
             Thread.sleep(100)
+            timeout++
             Log.d(TAG, "KhoaNguyen - Wait for http response")
         }
         return gsonResponse
@@ -91,6 +106,7 @@ open class BaseMethod() {
     fun httpPostJson(url: String, parameters: List<Pair<String, Any?>>? = null): String {
         var gsonResponse = ""
         var isResponse = false
+        var timeout = 0
         try {
             Fuel.post(url, parameters).responseJson { request, response, result ->
                 var responseJson: String = result.get().content
@@ -104,7 +120,11 @@ open class BaseMethod() {
         } finally {
         }
         while (!isResponse) {
+            if (timeout > 200) {
+                break
+            }
             Thread.sleep(100)
+            timeout++
             Log.d(TAG, "KhoaNguyen - Wait for http response")
         }
         return gsonResponse

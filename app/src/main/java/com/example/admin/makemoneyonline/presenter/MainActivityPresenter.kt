@@ -7,7 +7,7 @@ import com.example.admin.makemoneyonline.AsynTaskManager.CaseManager
 import com.example.admin.makemoneyonline.AsynTaskManager.MakeMoneyOnlineTask
 import com.example.admin.makemoneyonline.AsynTaskManager.ResultObject
 
-class MainActivityPresenter(context: Context, mainActivity: MainActivity): BaseMethod(), IMainActivityPresenter, AsyncTaskCompleteListener<ResultObject> {
+class MainActivityPresenter(context: Context, mainActivity: MainActivity) : BaseMethod(), IMainActivityPresenter, AsyncTaskCompleteListener<ResultObject> {
 
     private var mMainActivity: IMainActivity? = null
     internal var mContext: Context? = null
@@ -21,12 +21,14 @@ class MainActivityPresenter(context: Context, mainActivity: MainActivity): BaseM
     override fun sendRequestGetAllStaff() {
         MakeMoneyOnlineTask(this).execute(CaseManager(KeyManager().REQ_GETALLSTAFF, UrlManager().GET_ALLSTAFF, null));
     }
-    override fun onTaskError(s: String, CaseRequest: String) {
 
+    override fun onTaskError(s: String, CaseRequest: String) {
+        mMainActivity!!.onTaskError(s)
     }
 
     override fun onTaskCompleted(s: String, CaseRequest: String) {
         val tem = ""
+        mMainActivity!!.onTaskCompleted(s)
 
     }
 
