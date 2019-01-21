@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import com.example.admin.makemoneyonline.adapter.TabPagerAdapter
+import com.example.admin.makemoneyonline.presenter.LoginPresenter
+import com.example.admin.makemoneyonline.presenter.MainActivityPresenter
 import com.github.kittinunf.fuel.core.FuelManager
 import com.google.android.gms.ads.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,6 +39,8 @@ class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
     private var mGamePaused = false
     private var mTimeRemaining: Long = 0L
     private var mCountDownTimerVideo: CountDownTimer? = null
+
+    private val mMainActivityPresenter = MainActivityPresenter(this, this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -232,8 +236,7 @@ class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
     private fun addCoins(coins: Int) {
         mCoinCount += coins
         coin_count_text.text = "Coins: $mCoinCount"
-        val request = BaseMethod()
-        request.httpGetJson();
+        mMainActivityPresenter.sendRequestGetAllStaff()
     }
 
     private fun startGameVideo() {

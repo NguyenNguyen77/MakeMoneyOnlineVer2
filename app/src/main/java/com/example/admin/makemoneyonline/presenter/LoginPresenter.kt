@@ -9,10 +9,8 @@ import com.example.admin.makemoneyonline.AsynTaskManager.ResultObject
 
 class LoginPresenter(context: Context, loginActivity: LoginActivity) : BaseMethod(), ILoginPresenter, AsyncTaskCompleteListener<ResultObject> {
 
-    internal var context: Context? = null
-    private val loginActivity: ILoginActivity? = null
-    private var mResult = false
-
+    private var mLoginActivity: ILoginActivity? = null
+    internal var mContext: Context? = null
 
     fun LoginPresenter(context: Context, loginActivity: ILoginActivity) {
         this.mContext = context
@@ -29,8 +27,7 @@ class LoginPresenter(context: Context, loginActivity: LoginActivity) : BaseMetho
         return paramJson
     }
 
-    private var mLoginActivity: ILoginActivity? = null
-    internal var mContext: Context? = null
+
 
 
     override fun onTaskError(s: String, CaseRequest: String) {

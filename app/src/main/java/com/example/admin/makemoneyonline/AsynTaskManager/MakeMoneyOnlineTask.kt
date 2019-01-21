@@ -17,6 +17,9 @@ class MakeMoneyOnlineTask(asynCallBack: AsyncTaskCompleteListener<ResultObject>)
         if (reqJson == KeyManager().REQ_LOGIN) {
             result = caseManagers[0]!!.httpPostJson(caseManagers[0]!!.url, caseManagers[0]!!.paramJson!!)
             mResultObject = ResultObject(KeyManager().REQ_LOGIN, result)
+        } else  if (reqJson == KeyManager().REQ_GETALLSTAFF) {
+            result = caseManagers[0]!!.httpGetJson(caseManagers[0]!!.url)
+            mResultObject = ResultObject(KeyManager().REQ_GETALLSTAFF, result)
         }
         return mResultObject
     }

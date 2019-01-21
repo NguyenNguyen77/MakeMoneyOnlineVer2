@@ -11,51 +11,102 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.google.gson.Gson
 
+private val TAG = "Debug"
 
 open class BaseMethod() {
-    var gson = Gson()
 
-    fun httpGetJson() {
+
+    fun httpGetJson(url: String): String {
+        var gsonResponse = ""
+        var isResponse = false
         try {
-            Fuel.get("api/getAllStaff").responseJson { request, response, result ->
-                var responseJson: String = result.get().content.toString()
-                Log.d("KhoaNguyen", "Json: " + responseJson)
+            Fuel.get(url).responseJson { request, response, result ->
+                var responseJson: String = result.get().content
+                Log.d(TAG, "KhoaNguyen - Json: " + responseJson)
                 var gson = Gson()
-                var mMineUserEntity = gson?.fromJson(responseJson, MineUserEntity.MineUserInfo::class.java)
-                Log.d("KhoaNguyen", "Status: " + mMineUserEntity.status)
-                Log.d("KhoaNguyen", "Code: " + mMineUserEntity.success.code)
-                Log.d("KhoaNguyen", "ID[0]: " + mMineUserEntity.success.staff[1].id)
-                Log.d("KhoaNguyen", "Name[0]: " + mMineUserEntity.success.staff[1].name)
-
+                gsonResponse = gson?.fromJson(responseJson, MineUserEntity.MineUserInfo::class.java).toString()
+                isResponse = true
             }
         } catch (e: Exception) {
 //            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show() in ViewManager
 
         } finally {
-            //dismissInprogress Dialog to ViewManager
         }
+        while (!isResponse) {
+            Thread.sleep(100)
+            Log.d(TAG, "KhoaNguyen - Wait for http response")
+        }
+        return gsonResponse
     }
 
-    fun httpPostJson(url: String, parameters: List<Pair<String, Any?>>? = null): String {
-        var mMineUserEntity: String = ""
+
+    fun httpGetJson(url: String, parameters: List<Pair<String, Any?>>? = null): String {
+        var gsonResponse = ""
         var isResponse = false
         try {
-            Fuel.post(url, parameters).responseJson { request, response, result ->
-                var responseJson: String = result.get().content.toString()
-                Log.d("KhoaNguyen", "Json: " + responseJson)
+            Fuel.get(url, parameters).responseJson { request, response, result ->
+                var responseJson: String = result.get().content
+                Log.d(TAG, "KhoaNguyen - Json: " + responseJson)
                 var gson = Gson()
-                mMineUserEntity = gson?.fromJson(responseJson, LoginGson.LoginGson::class.java).toString()
+                gsonResponse = gson?.fromJson(responseJson, MineUserEntity.MineUserInfo::class.java).toString()
+                isResponse = true
+            }
+        } catch (e: Exception) {
+//            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show() in ViewManager
+
+        } finally {
+        }
+        while (!isResponse) {
+            Thread.sleep(100)
+            Log.d(TAG, "KhoaNguyen - Wait for http response")
+        }
+        return gsonResponse
+    }
+
+
+
+    fun httpPostJson(url: String): String {
+        var gsonResponse = ""
+        var isResponse = false
+        try {
+            Fuel.post(url).responseJson { request, response, result ->
+                var responseJson: String = result.get().content
+                Log.d(TAG, "KhoaNguyen - Json: " + responseJson)
+                var gson = Gson()
+                gsonResponse = gson?.fromJson(responseJson, LoginGson.LoginGson::class.java).toString()
                 isResponse = true
             }
         } catch (e: Exception) {
             //            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show() in ViewManager
         } finally {
-            //dismissInprogress Dialog to ViewManager
         }
         while (!isResponse) {
             Thread.sleep(100)
-            Log.d("KhoaNguyen", "Wait for http response")
+            Log.d(TAG, "KhoaNguyen - Wait for http response")
         }
-        return mMineUserEntity
+        return gsonResponse
+    }
+
+
+    fun httpPostJson(url: String, parameters: List<Pair<String, Any?>>? = null): String {
+        var gsonResponse = ""
+        var isResponse = false
+        try {
+            Fuel.post(url, parameters).responseJson { request, response, result ->
+                var responseJson: String = result.get().content
+                Log.d(TAG, "KhoaNguyen - Json: " + responseJson)
+                var gson = Gson()
+                gsonResponse = gson?.fromJson(responseJson, LoginGson.LoginGson::class.java).toString()
+                isResponse = true
+            }
+        } catch (e: Exception) {
+            //            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show() in ViewManager
+        } finally {
+        }
+        while (!isResponse) {
+            Thread.sleep(100)
+            Log.d(TAG, "KhoaNguyen - Wait for http response")
+        }
+        return gsonResponse
     }
 }
